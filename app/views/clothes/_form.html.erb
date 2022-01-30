@@ -1,0 +1,57 @@
+<%= form_with(model: clothe) do |form| %>
+  <% if clothe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(clothe.errors.count, "error") %> prohibited this clothe from being saved:</h2>
+
+      <ul>
+        <% clothe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :outfit_name %>
+    <%= form.text_field :outfit_name , class:"form-control"%>
+  </div>
+
+  <%# <div class="field form-group">
+    <%= form.label :weather %>
+    <%# <%= form.text_field :weather, class:"form-control" %>
+  <%# </div> %>
+
+  <div>
+    <br>
+    <p>What Weather Would You Wear This?</p>
+    <%= form.radio_button :weather, "Cold"%>
+    <%= form.label :weather_cold, "Cold"%>
+    <%= form.radio_button :weather, "Warm"%>
+    <%= form.label :weather_warm, "Warm"%>
+  </div>
+
+  <%# <div class="field form-group">
+    <%= form.label :outfit_type %>
+    <%# <%= form.text_field :outfit_type, class:"form-control" %>
+  <%# </div> %>
+
+  <div>
+    <br>
+    <p>What Type Of Item Is This?</p>
+    <%= form.radio_button :outfit_type, "Top"%>
+    <%= form.label :outfit_type_top, "Top"%>
+    <%= form.radio_button :outfit_type, "Bottom"%>
+    <%= form.label :outfit_type_bottom, "Bottom"%>
+  </div>
+
+  <div class="field form-group">
+    
+    <%= form.number_field :user_id, id: :clothe_user_id, class:"form-control", value:current_user.id , type: :hidden%>
+  </div>
+
+
+  <br>
+  <div class="actions">
+    <%= form.submit class:"btn btn-dark"%>
+  </div>
+<% end %>

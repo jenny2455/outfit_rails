@@ -1,0 +1,14 @@
+<p>Hello! Here is what we have selected for you today. </p>
+
+
+
+        <% top = @clothes.where(outfit_type: "Top", user_id: current_user).sample.outfit_name%>
+        <% bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user).sample.outfit_name%>
+
+        <p> Top: <%= top %> </p>
+        <p> Bottom: <%= bottom %> </p>
+
+        <p>Not into it? Click "Generate My outfit" to ask for another selection.</p>
+   
+
+

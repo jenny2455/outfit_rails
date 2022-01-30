@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  outfit_name: MyString
+  weather: MyString
+  outfit_type: MyString
+
+two:
+  outfit_name: MyString
+  weather: MyString
+  outfit_type: MyString
