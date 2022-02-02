@@ -2,6 +2,9 @@ class RandomizeController < ApplicationController
     def randomize
         @clothes = Clothe.all
         
+        require 'net/http'
+        require 'net/https'
+        require 'json'
 
         if Rails.env.production?
             @country = request.location.country
@@ -10,12 +13,10 @@ class RandomizeController < ApplicationController
             @longitude = request.location.longitude
         end
 
-        require 'net/http'
-        require 'net/https'
-        require 'json'
+        
         # @url ='http://api.openweathermap.org/data/2.5/weather?zip=77006,us&units=imperial&appid=df0e81cffa9a356fbc90c30af77bb8af'
         # @url = 'http://api.openweathermap.org/geo/1.0/zip?zip=77006,us&appid=df0e81cffa9a356fbc90c30af77bb8af'
-        @url = 'api.openweathermap.org/data/2.5/weather?lat='+ @latitude +'&lon='+ @longitude +'&appid=df0e81cffa9a356fbc90c30af77bb8af'
+        @url = 'http://api.openweathermap.org/data/2.5/weather?lat='+ @latitude +'&lon='+ @longitude +'&appid=df0e81cffa9a356fbc90c30af77bb8af'
         @uri = URI(@url)
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
