@@ -6,6 +6,7 @@ class RandomizeController < ApplicationController
         require 'net/https'
         require 'json'
 
+        # Get user location
         if Rails.env.production?
             @country = request.location.country
             @city = request.location.city
@@ -16,7 +17,7 @@ class RandomizeController < ApplicationController
         
         # @url ='http://api.openweathermap.org/data/2.5/weather?zip=77006,us&units=imperial&appid=df0e81cffa9a356fbc90c30af77bb8af'
         # @url = 'http://api.openweathermap.org/geo/1.0/zip?zip=77006,us&appid=df0e81cffa9a356fbc90c30af77bb8af'
-        @url = 'http://api.openweathermap.org/data/2.5/weather?lat='+ @latitude +'&lon='+ @longitude +'&appid=df0e81cffa9a356fbc90c30af77bb8af'
+        @url = 'http://api.openweathermap.org/data/2.5/weather?lat='+ @latitude +'&lon='+ @longitude +'&units=imperial&appid=df0e81cffa9a356fbc90c30af77bb8af'
         @uri = URI(@url)
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
