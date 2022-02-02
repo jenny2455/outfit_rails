@@ -11,10 +11,11 @@ class RandomizeController < ApplicationController
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
         @temperature = @temperature_output["main"]["feels_like"].to_i.round(0)
-        @city = @temperature_output["name"]
+        # @city = @temperature_output["name"]
         
         if Rails.env.production?
             @country = request.location.country
+            @city = request.location.city
             @latitude = request.location.latitude
             @longitude = request.location.longitude
         end
