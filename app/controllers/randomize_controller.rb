@@ -9,8 +9,8 @@ class RandomizeController < ApplicationController
         if Rails.env.production?
             @country = request.location.country
             @city = request.location.city
-            @latitude = request.location.latitude
-            @longitude = request.location.longitude
+            @latitude = request.location.latitude.to_s
+            @longitude = request.location.longitude.to_s
         end
 
         
