@@ -1,10 +1,16 @@
-<p>The weather for <%= @city %> feels like <%= @temperature %> degrees F. Here is what we have selected for you today.</p>
+<%# Error Handling for if the user has put any clothes in the closet %>
+
+<%= if @clothes.any?%>
+    <p>The weather for <%= @city %> feels like <%= @temperature %> degrees F. Here is what we have selected for you today.</p>
 
 
-<p> Top: <%= @top %> </p>
-<p> Bottom: <%= @bottom %> </p>
+    <p> Top: <%= @top %> </p>
+    <p> Bottom: <%= @bottom %> </p>
 
-<p>Not into it? Click "Generate My outfit" to ask for another selection.</p>
+    <p>Not into it? Click "Generate My outfit" to ask for another selection.</p>
 
 
-
+<% else %>
+    <h1>Looks Like Your Closet Is Empty!</h1>
+    <p>To use the outfit generator, please add items to your closet.</p>
+<% end %>
