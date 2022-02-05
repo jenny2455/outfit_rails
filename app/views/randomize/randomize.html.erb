@@ -1,12 +1,8 @@
+<p>The weather for <%= @city %> feels like <%= @temperature %> degrees F. Here is what we have selected for you today.</p>
 
-<% if @clothes.where(user_id: current_user).empty?%>
-    <h1>Looks Like Your Closet Is Empty!</h1>
-    <p>To use the outfit generator, please add items to your closet.</p>
-<% else %>
-    <p>The weather for <%= @city %> feels like <%= @temperature %> degrees F. Here is what we have selected for you today.</p>
+<p> <%= @result %></p>
+<p> Top: <%= @top %> </p>
+<p> Bottom: <%= @bottom %> </p>
 
-    <p> Top: <%= @top %> </p>
-    <p> Bottom: <%= @bottom %> </p>
+<p>Not into it? Click "Generate My outfit" to ask for another selection.</p>
 
-    <p>Not into it? Click "Generate My outfit" to ask for another selection.</p>
-<% end %>

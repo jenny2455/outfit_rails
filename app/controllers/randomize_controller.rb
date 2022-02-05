@@ -22,23 +22,31 @@ class RandomizeController < ApplicationController
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
         @temperature = @temperature_output["main"]["feels_like"].to_i.round(0)
-        # @city = @temperature_output["name"]
+        @result = ""
         
+        # Check if the closet has items in it.
+
+        if @clothes.where(user_id: current_user).empty?
+            @result = "Looks like your closet is empty! Add some items to generate an outfit."
+            @top = "N/A"
+            @bottom = "N/A"
         #If statements for weather. 2 scenarios, we can still pick an outfit if the weather doesn't come in.
         # Error handling
-        if @temperature == ""
-            # set input to "error"
-            # select top and bottom with no temp requirements
-            @top = @clothes.where(outfit_type: "Top", user_id: current_user).sample.outfit_name
-            @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user).sample.outfit_name
-        elsif @temperature <= 60
-            # select top and bottom with weather of "cold"
-            @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Cold").sample.outfit_name
-            @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Cold").sample.outfit_name
-        elsif @temperature > 60
-            # select top and bottom with weather of "warm"
-            @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm").sample.outfit_name
-            @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm").sample.outfit_name
+        else
+            if @temperature == ""
+                # set input to "error"
+                # select top and bottom with no temp requirements
+                @top = @clothes.where(outfit_type: "Top", user_id: current_user).sample.outfit_name
+                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user).sample.outfit_name
+            elsif @temperature <= 60
+                # select top and bottom with weather of "cold"
+                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Cold").sample.outfit_name
+                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Cold").sample.outfit_name
+            elsif @temperature > 60
+                # select top and bottom with weather of "warm"
+                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm").sample.outfit_name
+                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm").sample.outfit_name
+            end
         end
          
     end
