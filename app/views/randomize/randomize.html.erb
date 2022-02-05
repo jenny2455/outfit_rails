@@ -1,5 +1,5 @@
 
-<% if @clothes.user_id.nil?%>
+<% if @clothes.where(user_id: current_user).empty?%>
     <h1>Looks Like Your Closet Is Empty!</h1>
     <p>To use the outfit generator, please add items to your closet.</p>
 <% else %>
