@@ -24,8 +24,6 @@ class RandomizeController < ApplicationController
         @temperature = @temperature_output["main"]["feels_like"].to_i.round(0)
         # @city = @temperature_output["name"]
         
-        
-
         #If statements for weather. 2 scenarios, we can still pick an outfit if the weather doesn't come in.
         # Error handling
         if @temperature == ""
@@ -42,15 +40,7 @@ class RandomizeController < ApplicationController
             @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm").sample.outfit_name
             @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm").sample.outfit_name
         end
-
-
-        
-
-        
-
-
          
     end
 
-    
 end
