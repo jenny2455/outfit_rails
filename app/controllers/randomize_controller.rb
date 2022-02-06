@@ -5,6 +5,9 @@ class RandomizeController < ApplicationController
         require 'net/http'
         require 'net/https'
         require 'json'
+        
+        require_relative '../.api_key.rb'
+        
 
         # Get user location
         if Rails.env.production?
@@ -14,10 +17,14 @@ class RandomizeController < ApplicationController
             @longitude = request.location.longitude.to_s
         end
 
+        if Rails.env.development?
+            @city = "Houston"
+            @latitude = 29.78344.to_s
+            @longitude = -95.37231.to_s
+        end
         
-        # @url ='http://api.openweathermap.org/data/2.5/weather?zip=77006,us&units=imperial&appid=df0e81cffa9a356fbc90c30af77bb8af'
-        # @url = 'http://api.openweathermap.org/geo/1.0/zip?zip=77006,us&appid=df0e81cffa9a356fbc90c30af77bb8af'
-        @url = 'http://api.openweathermap.org/data/2.5/weather?lat='+ @latitude +'&lon='+ @longitude +'&units=imperial&appid=df0e81cffa9a356fbc90c30af77bb8af'
+        
+        @url = "http://api.openweathermap.org/data/2.5/weather?lat="+ @latitude +"&lon="+ @longitude +"&units=imperial&appid=#{$api_key}"
         @uri = URI(@url)
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
@@ -25,27 +32,21 @@ class RandomizeController < ApplicationController
         @result = ""
         
         # Check if the closet has items in it.
-
         if @clothes.where(user_id: current_user).empty?
             @result = "Looks like your closet is empty! Add some items to generate an outfit."
             @top = "N/A"
             @bottom = "N/A"
-        #If statements for weather. 2 scenarios, we can still pick an outfit if the weather doesn't come in.
-        # Error handling
         else
             if @temperature == ""
-                # set input to "error"
-                # select top and bottom with no temp requirements
+                @result = "Couldn't retrieve weather data, here is our recommendation without it."
                 @top = @clothes.where(outfit_type: "Top", user_id: current_user).sample.outfit_name
                 @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user).sample.outfit_name
             elsif @temperature <= 60
-                # select top and bottom with weather of "cold"
-                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Cold").sample.outfit_name
-                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Cold").sample.outfit_name
+                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Cold").or(@clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm and Cold")).sample.outfit_name
+                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Cold").or(@clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm and Cold")).sample.outfit_name
             elsif @temperature > 60
-                # select top and bottom with weather of "warm"
-                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm").sample.outfit_name
-                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm").sample.outfit_name
+                @top = @clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm").or(@clothes.where(outfit_type: "Top", user_id: current_user, weather: "Warm and Cold")).sample.outfit_name
+                @bottom = @clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm").or(@clothes.where(outfit_type: "Bottom", user_id: current_user, weather: "Warm and Cold")).sample.outfit_name
             end
         end
          
