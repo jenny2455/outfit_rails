@@ -6,7 +6,7 @@ class RandomizeController < ApplicationController
         require 'net/https' 
         require 'json'
         
-        require_relative '../.api_key.rb'
+        # require_relative '../.api_key.rb'
         
 
         # Get user location
