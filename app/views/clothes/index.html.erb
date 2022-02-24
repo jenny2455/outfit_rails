@@ -8,7 +8,7 @@
         <th>Item Name</th>
         <th>Weather</th>
         <th>Item Type</th>
-        <th>User ID</th>
+        <%# <th>User ID</th> %>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -20,7 +20,7 @@
             <td><%= link_to clothe.outfit_name , clothe %></td>
             <td><%= clothe.weather %></td>
             <td><%= clothe.outfit_type %></td>
-            <td><%= clothe.user_id%></td>
+            <%# <td><%= clothe.user_id%></td> 
             <td><%= link_to 'Edit', edit_clothe_path(clothe) %></td>
             <td><%= link_to 'Delete', clothe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
