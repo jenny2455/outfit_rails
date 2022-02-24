@@ -6,7 +6,7 @@ class RandomizeController < ApplicationController
         require 'net/https' 
         require 'json'
         
-        # require_relative '../.api_key.rb'
+        require_relative '../.api_key.rb'
         
 
         # Get user location
@@ -23,8 +23,8 @@ class RandomizeController < ApplicationController
             @longitude = 2.349014.to_s
         end
         
-        @url = "http://api.openweathermap.org/data/2.5/weather?lat="+ @latitude +"&lon="+ @longitude +"&units=imperial&appid=24491211b2517343f794bed6bab3ded8"
-        # @url = "http://api.openweathermap.org/data/2.5/weather?lat="+ @latitude +"&lon="+ @longitude +"&units=imperial&appid=#{$api_key}"
+        
+        @url = "http://api.openweathermap.org/data/2.5/weather?lat="+ @latitude +"&lon="+ @longitude +"&units=imperial&appid=#{$api_key}"
         @uri = URI(@url)
         @temperature_response = Net::HTTP.get(@uri)
         @temperature_output = JSON.parse(@temperature_response)
