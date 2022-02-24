@@ -119,6 +119,6 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
     # put heroku URL in the host
-    config.action_mailer.default_url_options = { host: 'jens-outfit-app.herokuapp.com/'}
+    config.action_mailer.default_url_options = { host: 'floating-brook-14107.herokuapp.com'}
 
 end
